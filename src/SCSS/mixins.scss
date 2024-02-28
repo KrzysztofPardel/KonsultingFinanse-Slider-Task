@@ -1,0 +1,48 @@
+@mixin sm {
+  @media (min-width: 640px) {
+    @content;
+  }
+}
+// @include sm {}
+@mixin md {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+// @include md {}
+
+@mixin lg {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+// @include tablet {}
+@mixin xl {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+// @include xl {}
+
+@mixin xl2 {
+  @media (min-width: 1536px) {
+    @content;
+  }
+}
+// @include xl2 {}
+
+@mixin button {
+  height: 5rem;
+  width: 15rem;
+  font-size: 1.2rem;
+  padding: 0.6rem 2rem;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: gray;
+  font-family: $font-alt;
+  font-weight: 300;
+  border: 1px grey solid;
+  @content;
+}
+// @include button {
+// }

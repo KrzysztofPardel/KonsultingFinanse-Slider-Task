@@ -1,0 +1,138 @@
+@import '../../SCSS/main.scss';
+
+//SliderOne
+
+.hero-container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: column;
+	background-color: rgb(255, 255, 255, 0.5);
+	&::before {
+		content: '';
+		background-image: url(../../assets/background.jpg);
+		background-size: cover;
+		background-position: center;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: -1;
+	}
+}
+
+.container-text {
+	width: 80%;
+	height: auto;
+	margin-top: 3.6rem;
+	.text-titles {
+		width: 100%;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+		.text-title {
+			font-family: 'Roboto', sans-serif;
+			font-size: 3.6rem;
+			font-weight: 800;
+			color: #1c1c1c;
+		}
+	}
+	.text-description {
+		display: flex;
+		flex-direction: column;
+		font-family: 'Roboto', sans-serif;
+		font-size: 1.2rem;
+		font-weight: 400;
+		color: #1c1c1c;
+		gap: 0.5rem;
+		.description-span {
+			text-transform: bold;
+			font-weight: 600;
+		}
+		.description-star {
+			color: #ffdc17;
+		}
+	}
+}
+
+.container-slider {
+	width: 80%;
+	height: 100%;
+
+	.container-carousel {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		.carousel-slide {
+			width: 100%;
+			height: 100%;
+			border-radius: 25px;
+		}
+	}
+	.slide-container {
+		width: 100%;
+		height: 100%;
+	}
+	.slide-topContainer {
+		width: 100%;
+		height: 75%;
+		border-top: 35px;
+
+		.slide-img {
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+		}
+	}
+
+	.slide-bottomContainer {
+		width: 100%;
+		height: 100%;
+		padding: 1rem 0rem;
+		text-align: center;
+		background-color: rgb(255, 255, 255);
+		.slide-title {
+			width: 100%;
+			height: auto;
+			font-family: 'Roboto', sans-serif;
+			font-size: 1.2rem;
+			color: #1c1c1c;
+		}
+	}
+
+	.slider-controls {
+		position: absolute;
+		bottom: 20%; 
+		transform: translateY(-60%) translateX(-10%);
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		padding: 0 2rem; 
+		box-sizing: border-box; 
+		z-index: 1; 
+
+		.btn {
+			background-color: transparent;
+			color: white;
+			border: none;
+			cursor: pointer;
+			font-size: 1rem;
+			padding: 0.1rem;
+			&:focus {
+				outline: none;
+			}
+			.btn-icon {
+				font-size: 3rem;
+			}
+		}
+	}
+}
