@@ -1,10 +1,10 @@
+import { useState, useEffect } from 'react';
 import './SCSS/Sliders.scss';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-// import Slider from 'react-slick';
 import { FaStar } from 'react-icons/fa';
-import { IoArrowForwardCircleSharp } from 'react-icons/io5';
-import { IoArrowBackCircleSharp } from 'react-icons/io5';
+import { IoArrowBackOutline } from 'react-icons/io5';
+import { IoArrowForwardOutline } from 'react-icons/io5';
 
 import wheels from '../assets/wheels.jpg';
 import carAudio from '../assets/carAudio.jpg';
@@ -29,6 +29,23 @@ const SLIDE_ITEMS = [
 ];
 
 const SliderOne = () => {
+	const [isLargeView, setIsLargeView] = useState(window.innerWidth >= 1024);
+	const [currentSlide, setCurrentSlide] = useState(0);
+
+	const handleSlideVisible = (slideIndex: number) => {
+		setCurrentSlide(slideIndex);
+	};
+	const handleResize = () => {
+		setIsLargeView(window.innerWidth >= 1024);
+	};
+
+	useEffect(() => {
+		window.addEventListener('resize', handleResize);
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
+
 	return (
 		<div className="hero-container">
 			<div className="container-text">
@@ -37,7 +54,7 @@ const SliderOne = () => {
 					<h1 className="text-title">Twojego auta</h1>
 				</div>
 				<p className="text-description">
-					Mamy w swojej bazie <span className="description-span">84 114 warsztatów</span> ocenianych średnio na
+					Mamy w swojej bazie <span className="description-span">84 114 warsztatów</span> ocenianych średnio na{''}
 					<span className="description-span">
 						<FaStar className="description-star" />
 						4.0
@@ -45,35 +62,75 @@ const SliderOne = () => {
 				</p>
 			</div>
 			<div className="container-slider">
-				<CarouselProvider
-					naturalSlideWidth={100}
-					naturalSlideHeight={125}
-					className="container-carousel"
-					totalSlides={SLIDE_ITEMS.length}
-				>
-					<Slider className="carousel-slider">
-						{SLIDE_ITEMS.map(({ index, src, alt, description }) => (
-							<Slide className="carousel-slide" index={index} key={index}>
-								<div className="slide-container">
-									<div className="slide-topContainer">
-										<img src={src} alt={alt} className="slide-img" />
+				{!isLargeView && ( // Render CarouselProvider for smaller views
+					<CarouselProvider
+						naturalSlideWidth={100}
+						naturalSlideHeight={125}
+						className="container-carousel"
+						totalSlides={SLIDE_ITEMS.length}
+						visibleSlides={1}
+						step={1}
+					>
+						<Slider className="carousel-slider">
+							{SLIDE_ITEMS.map(({ index, src, alt, description }) => (
+								<Slide className="carousel-slide" index={index} key={index}>
+									<div className="slide-container">
+										<div className="slide-topContainer">
+											<img src={src} alt={alt} className="slide-img" />
+										</div>
+										<div className="slide-bottomContainer">
+											<h3 className="slide-title">{description}</h3>
+										</div>
 									</div>
-									<div className="slide-bottomContainer">
-										<h3 className="slide-title">{description}</h3>
+								</Slide>
+							))}
+						</Slider>
+						<div className="slider-controls">
+							<ButtonBack className="btn">
+								<IoArrowBackOutline className="btn-icon" />
+							</ButtonBack>
+							<ButtonNext className="btn">
+								<IoArrowForwardOutline className="btn-icon" />
+							</ButtonNext>
+						</div>
+					</CarouselProvider>
+				)}
+				{isLargeView && ( // Render CarouselProvider for large view
+					<CarouselProvider
+						naturalSlideWidth={100}
+						naturalSlideHeight={125}
+						className="container-carousel"
+						totalSlides={SLIDE_ITEMS.length}
+						visibleSlides={4}
+						step={1}
+						isIntrinsicHeight={true}
+						currentSlide={currentSlide}
+						// onSlideComplete={(currentIndex) => setCurrentSlide(currentIndex)}
+					>
+						<Slider className="carousel-slider">
+							{SLIDE_ITEMS.map(({ index, src, alt, description }) => (
+								<Slide className="carousel-slide" index={index} key={index}>
+									<div className="slide-container">
+										<div className="slide-topContainer">
+											<img src={src} alt={alt} className="slide-img" />
+										</div>
+										<div className="slide-bottomContainer">
+											<h3 className="slide-title">{description}</h3>
+										</div>
 									</div>
-								</div>
-							</Slide>
-						))}
-					</Slider>
-					<div className="slider-controls">
-						<ButtonBack className="btn">
-							<IoArrowBackCircleSharp className="btn-icon" />
-						</ButtonBack>
-						<ButtonNext className="btn">
-							<IoArrowForwardCircleSharp className="btn-icon" />
-						</ButtonNext>
-					</div>
-				</CarouselProvider>
+								</Slide>
+							))}
+						</Slider>
+						<div className="slider-controls">
+							<ButtonBack className="btn">
+								<IoArrowBackOutline className="btn-icon" />
+							</ButtonBack>
+							<ButtonNext className="btn">
+								<IoArrowForwardOutline className="btn-icon" />
+							</ButtonNext>
+						</div>
+					</CarouselProvider>
+				)}
 			</div>
 		</div>
 	);

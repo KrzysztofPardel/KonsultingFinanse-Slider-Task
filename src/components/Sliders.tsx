@@ -3,8 +3,8 @@ import SliderTwo from './SliderTwo.tsx';
 const Sliders = () => {
 	return (
 		<>
-			<SliderOne />
-			<SliderTwo />
+			{/* <SliderOne /> */}
+			<SliderTwo totalSlides={6} />
 		</>
 	);
 };
