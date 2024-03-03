@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import './SCSS/Sliders.scss';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
-import 'pure-react-carousel/dist/react-carousel.es.css';
+import './SCSS/Sliders.scss';
 import { FaStar } from 'react-icons/fa';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { IoArrowForwardOutline } from 'react-icons/io5';
-
-import wheels from '../assets/wheels.jpg';
+import wheel from '../assets/wheel.jpg';
 import carAudio from '../assets/carAudio.jpg';
 import parts from '../assets/parts.jpg';
 import engine from '../assets/engine.jpg';
@@ -14,31 +12,29 @@ import repairman from '../assets/repairman.jpg';
 import rear from '../assets/rear.jpg';
 import turboEngine from '../assets/turboEngine.jpg';
 import wheels2 from '../assets/wheels2.jpg';
-import front from '../assets/front.jpg';
+import carBody from '../assets/carBody.jpg';
 
+//Array of objects to map through- an imitation of a database
 const SLIDE_ITEMS = [
-	{ index: 0, src: wheels, alt: wheels, description: 'WULKANIZACJA OPON I FELG ' },
-	{ index: 1, src: carAudio, alt: carAudio, description: 'CAR AUDIO' },
-	{ index: 2, src: parts, alt: parts, description: 'REGENERACJA CZĘŚCI' },
-	{ index: 3, src: engine, alt: engine, description: 'MECHANIKA POJAZDOWA' },
-	{ index: 4, src: repairman, alt: repairman, description: 'SERWIS BENZYNOWY I GAZOWY' },
-	{ index: 5, src: rear, alt: rear, description: 'KONSERWACJA ZABYTKÓW' },
-	{ index: 6, src: turboEngine, alt: turboEngine, description: 'IMPORT CZĘŚCI' },
-	{ index: 7, src: front, alt: front, description: 'WYMIANA CZĘŚCI' },
+	{ index: 0, src: carBody, alt: carBody, description: 'BLACHARSTWO I LAKIERNICTWO' },
+	{ index: 1, src: wheel, alt: wheel, description: 'WULKANIZACJA OPON I FELG ' },
+	{ index: 2, src: carAudio, alt: carAudio, description: 'CAR AUDIO' },
+	{ index: 3, src: parts, alt: parts, description: 'REGENERACJA CZĘŚCI' },
+	{ index: 4, src: engine, alt: engine, description: 'MECHANIKA POJAZDOWA' },
+	{ index: 5, src: repairman, alt: repairman, description: 'SERWIS BENZYNOWY I GAZOWY' },
+	{ index: 6, src: rear, alt: rear, description: 'KONSERWACJA ZABYTKÓW' },
+	{ index: 7, src: turboEngine, alt: turboEngine, description: 'IMPORT CZĘŚCI' },
 	{ index: 8, src: wheels2, alt: wheels2, description: 'TUNNING' },
 ];
 
 const SliderOne = () => {
 	const [isLargeView, setIsLargeView] = useState(window.innerWidth >= 1024);
-	const [currentSlide, setCurrentSlide] = useState(0);
 
-	const handleSlideVisible = (slideIndex: number) => {
-		setCurrentSlide(slideIndex);
-	};
+	//Resizing the window changes how many slides are visible
 	const handleResize = () => {
 		setIsLargeView(window.innerWidth >= 1024);
 	};
-
+	//Adjusting the window view when the component mounts
 	useEffect(() => {
 		window.addEventListener('resize', handleResize);
 		return () => {
@@ -62,75 +58,44 @@ const SliderOne = () => {
 				</p>
 			</div>
 			<div className="container-slider">
-				{!isLargeView && ( // Render CarouselProvider for smaller views
-					<CarouselProvider
-						naturalSlideWidth={100}
-						naturalSlideHeight={125}
-						className="container-carousel"
-						totalSlides={SLIDE_ITEMS.length}
-						visibleSlides={1}
-						step={1}
-					>
-						<Slider className="carousel-slider">
-							{SLIDE_ITEMS.map(({ index, src, alt, description }) => (
-								<Slide className="carousel-slide" index={index} key={index}>
-									<div className="slide-container">
-										<div className="slide-topContainer">
-											<img src={src} alt={alt} className="slide-img" />
-										</div>
-										<div className="slide-bottomContainer">
-											<h3 className="slide-title">{description}</h3>
-										</div>
-									</div>
-								</Slide>
-							))}
-						</Slider>
-						<div className="slider-controls">
-							<ButtonBack className="btn">
-								<IoArrowBackOutline className="btn-icon" />
-							</ButtonBack>
-							<ButtonNext className="btn">
-								<IoArrowForwardOutline className="btn-icon" />
-							</ButtonNext>
-						</div>
-					</CarouselProvider>
-				)}
-				{isLargeView && ( // Render CarouselProvider for large view
-					<CarouselProvider
-						naturalSlideWidth={100}
-						naturalSlideHeight={125}
-						className="container-carousel"
-						totalSlides={SLIDE_ITEMS.length}
-						visibleSlides={4}
-						step={1}
-						isIntrinsicHeight={true}
-						currentSlide={currentSlide}
-						// onSlideComplete={(currentIndex) => setCurrentSlide(currentIndex)}
-					>
-						<Slider className="carousel-slider">
-							{SLIDE_ITEMS.map(({ index, src, alt, description }) => (
-								<Slide className="carousel-slide" index={index} key={index}>
-									<div className="slide-container">
-										<div className="slide-topContainer">
-											<img src={src} alt={alt} className="slide-img" />
-										</div>
-										<div className="slide-bottomContainer">
-											<h3 className="slide-title">{description}</h3>
-										</div>
-									</div>
-								</Slide>
-							))}
-						</Slider>
-						<div className="slider-controls">
-							<ButtonBack className="btn">
-								<IoArrowBackOutline className="btn-icon" />
-							</ButtonBack>
-							<ButtonNext className="btn">
-								<IoArrowForwardOutline className="btn-icon" />
-							</ButtonNext>
-						</div>
-					</CarouselProvider>
-				)}
+				<CarouselProvider
+					naturalSlideWidth={100}
+					naturalSlideHeight={100}
+					className="carousel-provider"
+					totalSlides={SLIDE_ITEMS.length}
+					visibleSlides={isLargeView ? 4 : 1}
+					step={1}
+					isIntrinsicHeight={true}
+				>
+					<Slider className="carousel-slider">
+						{SLIDE_ITEMS.map(({ index, src, alt, description }) => (
+							<Slide className="carousel-slide" index={index} key={index}>
+								<div className="slide-topContainer">
+									<img
+										src={src}
+										alt={alt}
+										className="slide-img"
+										style={{ borderTopLeftRadius: '25px', borderTopRightRadius: '25px' }}
+									/>
+								</div>
+								<div
+									className="slide-bottomContainer"
+									style={{ borderBottomLeftRadius: '25px', borderBottomRightRadius: '25px' }}
+								>
+									<h3 className="slide-title">{description}</h3>
+								</div>
+							</Slide>
+						))}
+					</Slider>
+					<div className="slider-controls">
+						<ButtonBack className="btn">
+							<IoArrowBackOutline className="btn-icon" />
+						</ButtonBack>
+						<ButtonNext className="btn">
+							<IoArrowForwardOutline className="btn-icon" />
+						</ButtonNext>
+					</div>
+				</CarouselProvider>
 			</div>
 		</div>
 	);
