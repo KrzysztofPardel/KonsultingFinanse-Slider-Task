@@ -3,7 +3,7 @@
 ## Tech stack
 
 **Frontend:** React , TypeScript 
-**Building tool:** React , TypeScript 
+**Building tool:** [Vite](https://vitejs.dev)
 
 ## Deployment
 
