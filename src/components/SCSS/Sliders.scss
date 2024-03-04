@@ -288,7 +288,7 @@
 	font-size: 2rem;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 500;
-	background: #1aa36a;
+	background: #46dc9e;
 	background: linear-gradient(128deg, 00c372, 00c372);
 }
 
@@ -320,12 +320,12 @@
 
 //slides
 .keen-slider__slide .keen-slider__slide--center {
-	filter: none;
+	// filter: none;
 	transition: width 0.3s ease;
 	width: 35rem;
 }
 .keen-slider__slide:not(.keen-slider__slide--center) {
-	filter: grayscale(70%);
+	opacity: 30%;
 	transition: width 0.3s ease;
 	width: 10rem;
 }
