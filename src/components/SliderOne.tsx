@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import { CarouselStoreInterface } from 'pure-react-carousel';
 import './SCSS/Sliders.scss';
 import { FaStar } from 'react-icons/fa';
 import { IoArrowBackOutline } from 'react-icons/io5';
@@ -14,6 +15,9 @@ import turboEngine from '../assets/turboEngine.jpg';
 import wheels2 from '../assets/wheels2.jpg';
 import carBody from '../assets/carBody.jpg';
 
+interface SliderOneProps {
+	carouselContext: CarouselStoreInterface | undefined;
+}
 //Array of objects to map through- an imitation of a database
 const SLIDE_ITEMS = [
 	{ index: 0, src: carBody, alt: carBody, description: 'BLACHARSTWO I LAKIERNICTWO' },
@@ -27,8 +31,9 @@ const SLIDE_ITEMS = [
 	{ index: 8, src: wheels2, alt: wheels2, description: 'TUNNING' },
 ];
 
-const SliderOne = () => {
+const SliderOne: React.FC<SliderOneProps> = ({ carouselContext }) => {
 	const [isLargeView, setIsLargeView] = useState(window.innerWidth >= 1024);
+	const [currentSlide, setCurrentSlide] = useState<number>(0);
 
 	//Resizing the window changes how many slides are visible
 	const handleResize = () => {
@@ -41,6 +46,41 @@ const SliderOne = () => {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (carouselContext && carouselContext.state) {
+			// Ensure carouselContext and its state property exist
+			const currentSlide = carouselContext?.state?.currentSlide ?? 0;
+			console.log('Current slide:', currentSlide);
+		}
+	}, [carouselContext]);
+
+	const checkVisibleSlides = () => {
+		if (carouselContext && carouselContext.state) {
+			const visibleSlidesIndexes = Array.from(
+				Array(carouselContext.state.visibleSlides),
+				(_, i) => carouselContext.state.currentSlide + i
+			);
+			console.log('Visible slides indexes:', visibleSlidesIndexes);
+		}
+	};
+
+	// const handleSlideChange = (newSlideIndex: number) => {
+	// 	if (carouselContext?.state?.currentSlide !== undefined) {
+	// 		const totalSlides = SLIDE_ITEMS.length;
+	// 		if (newSlideIndex >= 0 && newSlideIndex < totalSlides) {
+	// 			console.log('Slide changed to:', newSlideIndex);
+	// 		}
+	// 		console.log(setCurrentSlide(carouselContext?.state?.currentSlide));
+	// 	}
+	// };
+
+	// const checkSlide = () => {
+	// 	if (carouselContext?.state?.currentSlide !== undefined) {
+	// 		const index = setCurrentSlide(carouselContext?.state?.currentSlide);
+	// 		console.log(index);
+	// 	}
+	// };
 
 	return (
 		<div className="hero-container">
@@ -64,6 +104,7 @@ const SliderOne = () => {
 					className="carousel-provider"
 					totalSlides={SLIDE_ITEMS.length}
 					visibleSlides={isLargeView ? 4 : 1}
+					currentSlide={currentSlide}
 					step={1}
 					isIntrinsicHeight={true}
 				>
@@ -89,9 +130,19 @@ const SliderOne = () => {
 					</Slider>
 					<div className="slider-controls">
 						<ButtonBack className="btn">
-							<IoArrowBackOutline className="btn-icon" />
+							<IoArrowBackOutline
+								className="btn-icon"
+								onClick={checkVisibleSlides}
+								// onClick={() => handleSlideChange((carouselContext?.state?.currentSlide ?? 0) - 1)}
+							/>
 						</ButtonBack>
-						<ButtonNext className="btn">
+
+						<ButtonNext
+							className="btn"
+							onClick={checkVisibleSlides}
+
+							// onClick={() => handleSlideChange((carouselContext?.state?.currentSlide ?? 0) + 1)}
+						>
 							<IoArrowForwardOutline className="btn-icon" />
 						</ButtonNext>
 					</div>
