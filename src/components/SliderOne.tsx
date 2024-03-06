@@ -102,25 +102,26 @@ const SliderOne: React.FC<SliderOneProps> = ({ carouselContext }) => {
 										className="slide-bottomContainer"
 										style={{ borderBottomLeftRadius: '25px', borderBottomRightRadius: '25px' }}
 									>
-										<h3 className="slide-title">{description}</h3>
+										<h3 className="slide-title">
+											{description}
+											{index}
+										</h3>
 									</div>
 								</Slide>
 							);
 						})}
 					</Slider>
 					<div className="slider-controls">
-						<ButtonBack className="btn">
-							<IoArrowBackOutline
-								// style={SLIDE_ITEMS.forEach(index===)=>(index===?)}
-								className="btn-icon"
-
-								// onClick={setCurrentSlide((prev) => prev - 1)}
-							/>
+						<ButtonBack
+							className={`btn ${currentSlide === 0 ? 'invisible' : 'visible'}`}
+							onClick={() => setCurrentSlide((prev) => Math.max(0, prev - 1))}
+						>
+							<IoArrowBackOutline className="btn-icon" />
 						</ButtonBack>
 
 						<ButtonNext
-							className="btn"
-							// onClick={setCurrentSlide((prev) => prev + 1)}
+							className={`btn ${currentSlide === SLIDE_ITEMS.length - 2 ? 'invisible' : 'visible'}`}
+							onClick={() => setCurrentSlide((prev) => Math.min(SLIDE_ITEMS.length - 2, prev + 1))}
 						>
 							<IoArrowForwardOutline className="btn-icon" />
 						</ButtonNext>
