@@ -31,7 +31,7 @@ const SLIDE_ITEMS = [
 	{ index: 8, src: wheels2, alt: wheels2, description: 'TUNNING' },
 ];
 
-const SliderOne: React.FC<SliderOneProps> = ({ carouselContext }) => {
+const SliderOne: React.FC<SliderOneProps> = () => {
 	const [isLargeView, setIsLargeView] = useState(window.innerWidth >= 1024);
 	const [currentSlide, setCurrentSlide] = useState<number>(0);
 
