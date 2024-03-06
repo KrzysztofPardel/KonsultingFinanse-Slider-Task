@@ -47,41 +47,6 @@ const SliderOne: React.FC<SliderOneProps> = ({ carouselContext }) => {
 		};
 	}, []);
 
-	useEffect(() => {
-		if (carouselContext && carouselContext.state) {
-			// Ensure carouselContext and its state property exist
-			const currentSlide = carouselContext?.state?.currentSlide ?? 0;
-			console.log('Current slide:', currentSlide);
-		}
-	}, [carouselContext]);
-
-	const checkVisibleSlides = () => {
-		if (carouselContext && carouselContext.state) {
-			const visibleSlidesIndexes = Array.from(
-				Array(carouselContext.state.visibleSlides),
-				(_, i) => carouselContext.state.currentSlide + i
-			);
-			console.log('Visible slides indexes:', visibleSlidesIndexes);
-		}
-	};
-
-	// const handleSlideChange = (newSlideIndex: number) => {
-	// 	if (carouselContext?.state?.currentSlide !== undefined) {
-	// 		const totalSlides = SLIDE_ITEMS.length;
-	// 		if (newSlideIndex >= 0 && newSlideIndex < totalSlides) {
-	// 			console.log('Slide changed to:', newSlideIndex);
-	// 		}
-	// 		console.log(setCurrentSlide(carouselContext?.state?.currentSlide));
-	// 	}
-	// };
-
-	// const checkSlide = () => {
-	// 	if (carouselContext?.state?.currentSlide !== undefined) {
-	// 		const index = setCurrentSlide(carouselContext?.state?.currentSlide);
-	// 		console.log(index);
-	// 	}
-	// };
-
 	return (
 		<div className="hero-container">
 			<div className="container-text">
@@ -103,45 +68,59 @@ const SliderOne: React.FC<SliderOneProps> = ({ carouselContext }) => {
 					naturalSlideHeight={100}
 					className="carousel-provider"
 					totalSlides={SLIDE_ITEMS.length}
-					visibleSlides={isLargeView ? 4 : 1}
+					visibleSlides={isLargeView ? 2 : 1} //zmienione z 4
 					currentSlide={currentSlide}
 					step={1}
 					isIntrinsicHeight={true}
 				>
-					<Slider className="carousel-slider">
-						{SLIDE_ITEMS.map(({ index, src, alt, description }) => (
-							<Slide className="carousel-slide" index={index} key={index}>
-								<div className="slide-topContainer">
-									<img
-										src={src}
-										alt={alt}
-										className="slide-img"
-										style={{ borderTopLeftRadius: '25px', borderTopRightRadius: '25px' }}
-									/>
-								</div>
-								<div
-									className="slide-bottomContainer"
-									style={{ borderBottomLeftRadius: '25px', borderBottomRightRadius: '25px' }}
+					<Slider className="carousel-slider" moveThreshold={10}>
+						{SLIDE_ITEMS.map(({ index, src, alt, description }) => {
+							// Calculate the index of the last currently visible slide
+							// const isFirstVisibleSlide = index === currentSlide;
+
+							// const isLastVisibleSlide = index === currentSlide + (isLargeView ? 3 : 0);
+
+							return (
+								<Slide
+									index={index}
+									key={index}
+									className="carousel-slide"
+									classNameVisible=""
+									classNameHidden="transparent"
+									style={isLargeView ? { width: '4rem' } : { width: '100%' }}
+									// className={`carousel-slide ${isFirstVisibleSlide || isLastVisibleSlide ? 'transparent' : ''}`}
 								>
-									<h3 className="slide-title">{description}</h3>
-								</div>
-							</Slide>
-						))}
+									<div className="slide-topContainer">
+										<img
+											src={src}
+											alt={alt}
+											className="slide-img"
+											style={{ borderTopLeftRadius: '25px', borderTopRightRadius: '25px' }}
+										/>
+									</div>
+									<div
+										className="slide-bottomContainer"
+										style={{ borderBottomLeftRadius: '25px', borderBottomRightRadius: '25px' }}
+									>
+										<h3 className="slide-title">{description}</h3>
+									</div>
+								</Slide>
+							);
+						})}
 					</Slider>
 					<div className="slider-controls">
 						<ButtonBack className="btn">
 							<IoArrowBackOutline
+								// style={SLIDE_ITEMS.forEach(index===)=>(index===?)}
 								className="btn-icon"
-								onClick={checkVisibleSlides}
-								// onClick={() => handleSlideChange((carouselContext?.state?.currentSlide ?? 0) - 1)}
+
+								// onClick={setCurrentSlide((prev) => prev - 1)}
 							/>
 						</ButtonBack>
 
 						<ButtonNext
 							className="btn"
-							onClick={checkVisibleSlides}
-
-							// onClick={() => handleSlideChange((carouselContext?.state?.currentSlide ?? 0) + 1)}
+							// onClick={setCurrentSlide((prev) => prev + 1)}
 						>
 							<IoArrowForwardOutline className="btn-icon" />
 						</ButtonNext>

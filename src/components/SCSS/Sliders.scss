@@ -123,15 +123,23 @@
 		}
 
 		@include lg {
+			display: flex; //added
+			overflow: hidden;
 			width: 100%;
 		}
 	}
 	.carousel-slide {
-		padding: 0.75rem;
-		border-radius: 25px;
 		height: 100%;
 		width: 100%;
-		flex-grow: 1;
+
+		@include lg {
+			padding-left: 0.75rem;
+			height: 100%;
+			flex-grow: 1;
+			display: flex;
+			justify-content: center;
+			left: 7%;
+		}
 	}
 
 	//library class extracted from DevTools
@@ -191,6 +199,7 @@
 		font-size: 1.2rem;
 		color: #1c1c1c;
 		padding: 1rem;
+		line-height: 1.5rem;
 		@include xs {
 			font-size: 1.5rem;
 		}
@@ -328,4 +337,12 @@
 	opacity: 30%;
 	transition: width 0.3s ease;
 	width: 10rem;
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+.transparent {
+	opacity: 30%;
 }
